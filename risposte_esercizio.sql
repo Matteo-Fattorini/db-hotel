@@ -58,8 +58,6 @@ SELECT SUM(beds) from stanze
 
 
 
-
-
 ___________________________________________
 ___________________________________________
 
@@ -99,10 +97,6 @@ ORDER BY COUNT(*) DESC;
 
 
 
-
-
-
-
 ___________________________________________
 ___________________________________________
 
@@ -127,11 +121,11 @@ ___________________________________________
 ●	Stampare Nome, Cognome, Prezzo e Pagante per tutte le prenotazioni fatte a Maggio 2018
 
 SELECT prenotazioni.created_at, ospiti.name, ospiti.lastname, pagamenti.price, paganti.name FROM prenotazioni
- JOIN prenotazioni_has_ospiti
+JOIN prenotazioni_has_ospiti
 ON prenotazioni_has_ospiti.prenotazione_id = prenotazioni.id
- JOIN ospiti
+JOIN ospiti
 ON ospiti.id = prenotazioni_has_ospiti.ospite_id
- JOIN pagamenti
+JOIN pagamenti
 ON pagamenti.prenotazione_id = prenotazioni.id
 LEFT JOIN paganti
 ON paganti.ospite_id = ospiti.id
@@ -167,9 +161,10 @@ ___________________________________________
 
 ●	Le stanze sono state tutte prenotate almeno una volta? (Visualizzare le stanze non ancora prenotate)
 
-SELECT stanza_id, COUNT(*) FROM prenotazioni
-right JOIN stanze
+SELECT *
+FROM prenotazioni
+RIGHT JOIN stanze 
 ON prenotazioni.stanza_id = stanze.id
-GROUP BY stanza_id
-HAVING COUNT(*) > 0
+WHERE
+prenotazioni.stanza_id IS NULL;
 
